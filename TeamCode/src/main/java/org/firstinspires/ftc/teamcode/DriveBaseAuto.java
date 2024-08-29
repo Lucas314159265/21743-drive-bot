@@ -14,8 +14,8 @@ public class DriveBaseAuto extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double COUNTS_PER_MOTOR_REV = 537.7;    // eg: TETRIX Motor Encoder
-    static final double DRIVE_GEAR_REDUCTION = 1.0;     // No External Gearing.
+    static final double COUNTS_PER_MOTOR_REV = 537.7;    // eg: TETRIX Motor Encoder //what is a count and why do we have the number 537.7?
+    static final double DRIVE_GEAR_REDUCTION = 1.0;     // No External Gearing. // // what does DRIVE_GEAR_REDUCTION = 1.0 do?
     static final double WHEEL_CIRCUMFERENCE_INCHES = 3.77953;
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) * WHEEL_CIRCUMFERENCE_INCHES;
     static final double DRIVE_SPEED = 0.6;
@@ -24,7 +24,7 @@ public class DriveBaseAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "lfd");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "lfd");    // on all four lines (27,28,29,and 30) we shorten the motor names but we never use the shortened names why?
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rfd");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rbd");
         leftBackDrive = hardwareMap.get(DcMotor.class, "lbd");
@@ -50,7 +50,7 @@ public class DriveBaseAuto extends LinearOpMode {
 
         waitForStart();
 
-        double distance = 24.375 * 3; // Length of tile times three tiles
+        double distance = 24.375 * 3; // Length of tile times three tiles // why three tiles, is it because that is the max robot room?
 
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
     }
@@ -72,7 +72,7 @@ public class DriveBaseAuto extends LinearOpMode {
             leftBackDrive.setTargetPosition(newLeftBackTarget);
             rightBackDrive.setTargetPosition(newRightBackTarget);
 
-            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION); // where is position defined?
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -85,11 +85,11 @@ public class DriveBaseAuto extends LinearOpMode {
             rightBackDrive.setPower(Math.abs(driveSpeed));
 
             while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
+                    (runtime.seconds() < timeoutS) && //why are these three diffenent lines not one?
                     (leftFrontDrive.isBusy() && rightFrontDrive.isBusy() && leftBackDrive.isBusy() && rightBackDrive.isBusy())) {
 
                 telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newLeftFrontTarget,  newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
-                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d",
+                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", // what does :%7d mean?
                         leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
                 telemetry.update();
             }
@@ -103,6 +103,7 @@ public class DriveBaseAuto extends LinearOpMode {
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            // thank you -Lucas
         }
     }
 }
